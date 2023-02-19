@@ -39,13 +39,15 @@ def centralized_algorithm(nodes:list, tasks:int):
 
 if __name__ == '__main__':
     # The parameters
-    N = 4 # The number of agents
-    M = 10 # The number of tasks
-    mode = 1 # The random mode, 0 for the integer mode, 1 for the real number mode
+    N = 5 # The number of agents
+    M = 100000 # The number of tasks
+    mode = 2 # The random mode, 0 for the integer mode, 1 for the real number mode,3 for self-defined
     if mode ==  0:
         u = np.random.uniform(2, 10, N) # The efficiency of the agents
-    else:
+    elif mode == 1:
         u = np.random.randint(2, 10, N)
+    elif mode == 2:
+        u = np.array([1000, 900, 800, 1200, 1100])
     print('The efficiency of the agents are: ')
     print(u)
     # The initialization
