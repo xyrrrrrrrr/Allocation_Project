@@ -18,4 +18,5 @@ class Node():
         self.u = u
         self.t = 0
         self.current_state = 1/u
-        self.time = 0    
+        self.time = 0
+        self.neighbor = []    
