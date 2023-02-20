@@ -88,6 +88,21 @@ def distributed(nodes:list, tasks:int, nei:list):
         current_node = choose_nodes(len(nodes), nodes)
         potential_neighbors = []
         used_to_be = []
+        tool = [i for i in range(1,N+1) if i != current_node.id]
+        pair_node = nodes[np.random.choice(tool)-1]
+        if current_node.time > pair_node.current_state:
+            current_node.t -= 1
+            current_node.time = current_node.t / current_node.u
+            current_node.current_state = current_node.time - 1 / current_node.u
+            pair_node.t += 1
+            pair_node.time = pair_node.t / pair_node.u
+            pair_node.current_state = pair_node.time + 1 / pair_node.u
+            tools.sort(key=lambda x: x.time, reverse=True)
+            current_best_time = tools[0].time
+            current_allocations = [node.t for node in nodes]
+            print('?The current best time is: ', current_best_time, 'The rest tasks are: ', rest_tasks, 
+            'current_time is:', time.time() - start_time, 'current allocation:', current_allocations,
+            flush=True, end='\r')
         while True:
             for neibo in current_node.neighbor:
                 if nodes[neibo - 1].current_state < current_node.time:
@@ -124,7 +139,7 @@ def distributed(nodes:list, tasks:int, nei:list):
                 print('The current best time is: ', current_best_time, 'The rest tasks are: ', rest_tasks, 
                 'current_time is:', time.time() - start_time, 'current allocation:', current_allocations,
                 flush=True, end='\r')
-        if rest_tasks == 0:
+        if time.time()-start_time > 10:
             break
         # 显示当前的最佳时间，不断更新
         
